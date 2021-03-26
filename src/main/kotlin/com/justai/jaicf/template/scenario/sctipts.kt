@@ -1,12 +1,12 @@
 package com.justai.jaicf.template.scenario
 import com.justai.jaicf.context.BotContext
 
-class GameFunctions(context: BotContext) {
+class GameFunctions() {
     fun getCity() {
-     /*   var city: String
-        var letter = getCityLetter();
-        if (letter == "") {
-            letter = selectRandomArg("А", "Б", "В", "Г", "Д", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т");
+        var city: String
+        var letter = getCityLetter()
+        if (letter) {
+            letter = selectRandomArg("А", "Б", "В", "Г", "Д", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т")
         }
         var citiesNumber = Object.keys($Cities).length;
         var sortedCityNames = findCities(letter, citiesNumber);
@@ -21,10 +21,10 @@ class GameFunctions(context: BotContext) {
     }
 
     fun getCityLetter() {
-        var letter = "";
-        var letters;
-        var lastCityName = $session.gameCities[$session.gameCities.length - 1];
-        if ($session.gameCities && lastCityName) {
+        var letter = false
+        var letters: String
+        var lastCityName = gameCities[gameCities.size - 1]
+        if (gameCities && lastCityName) {
             letters = lastCityName.substring(lastCityName.length - 2);
             letter = validateLetters(letters);
         }
@@ -41,6 +41,6 @@ class GameFunctions(context: BotContext) {
             letter = letters.substring(0, 1);
             break;
         }
-        return letter.toUpperCase();*/
+        return letter.toUpperCase()
     }
 }

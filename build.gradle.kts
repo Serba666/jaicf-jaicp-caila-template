@@ -30,6 +30,8 @@ dependencies {
     implementation("com.justai.jaicf:core:$jaicf")
     implementation("com.justai.jaicf:jaicp:$jaicf")
     implementation("com.justai.jaicf:caila:$jaicf")
+    implementation("com.justai.jaicf:google-actions:$jaicf")
+    implementation ("org.apache.commons:commons-csv:1.8")
 }
 
 tasks {
@@ -39,6 +41,7 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+
 }
 
 tasks.create("stage") {

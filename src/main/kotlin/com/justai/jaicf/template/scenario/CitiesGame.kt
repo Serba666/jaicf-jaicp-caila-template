@@ -7,7 +7,6 @@ import io.ktor.network.selector.SelectInterest.Companion.size
 
 var gameCities =  emptyArray<String>()
 
-
 val CitiesGame = Scenario {
     state("CheckWhoStarts") {
         activators {
