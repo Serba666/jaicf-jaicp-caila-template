@@ -3,7 +3,7 @@ import com.justai.jaicf.context.BotContext
 
 class GameFunctions() {
     fun getCity() {
-        var city: String
+/*        var city: String
         var letter = getCityLetter()
         if (letter) {
             letter = selectRandomArg("А", "Б", "В", "Г", "Д", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т")
@@ -41,6 +41,6 @@ class GameFunctions() {
             letter = letters.substring(0, 1);
             break;
         }
-        return letter.toUpperCase()
+        return letter.toUpperCase()*/
     }
 }

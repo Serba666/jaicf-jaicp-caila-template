@@ -26,13 +26,12 @@ fun readAll(context: BotContext) {
             context.session["city"] = csvRecord.get(3)
         }
         // Accessing Values by Column Index
-        println (csvRecord.get(3))
     }
 }
 
 val mainScenario = Scenario {
     append(CitiesGame)
-    append(GameFunctions)
+//    append(GameFunctions)
     state("Start") {
         activators {
             intent("WhatGamesYouHave")
@@ -40,13 +39,13 @@ val mainScenario = Scenario {
         action {
             reactions.run {
                 say("Есть {города}{город+а}. Играем?")
-                readAll(context)
+/*                readAll(context)
                 val airport = context.session["airport"]
                 val country = context.session["country"]
                 val city = context.session["city"]
                 say(
                     "code : AAD\n airport: $airport \n country: $country \n city: $city "
-                )
+                )*/
             }
         }
 
