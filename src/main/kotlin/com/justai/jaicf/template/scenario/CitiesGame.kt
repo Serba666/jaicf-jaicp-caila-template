@@ -2,7 +2,7 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.builder.Scenario
 import com.justai.jaicf.context.BotContext
-
+import kotlin.random.Random
 
 val CitiesGame = Scenario {
     state("CheckWhoStarts") {

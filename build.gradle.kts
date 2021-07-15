@@ -1,7 +1,8 @@
 plugins {
     application
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.5.20"
     id("com.justai.jaicf.jaicp-build-plugin") version "0.1.1"
+    id ("org.jetbrains.kotlin.plugin.serialization") version "1.5.20"
 }
 
 group = "com.justai.jaicf"
@@ -33,6 +34,7 @@ dependencies {
     implementation("com.justai.jaicf:google-actions:$jaicf")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 }
 
 tasks {
