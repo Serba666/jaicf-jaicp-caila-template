@@ -1,80 +1,64 @@
 package com.justai.jaicf.template.scenario
-import com.justai.jaicf.context.BotContext
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.builder
+import com.google.common.collect.ImmutableBiMap.builder
 import com.justai.jaicf.builder.Scenario
-import org.apache.commons.csv.CSVFormat
-import org.apache.commons.csv.CSVParser
-import java.nio.file.Paths
-import java.nio.file.Files
-import org.apache.commons.csv.CSVRecord
-
-import java.io.FileReader
-
-
-
-
-fun readAll(context: BotContext) {
-    val CSV_File_Path = "src/main/kotlin/com/justai/jaicf/template/dictionaries/cities.csv"
-    // read the file
-    val reader = Files.newBufferedReader(Paths.get(CSV_File_Path))
-    // parse the file into csv values
-    val csvParser = CSVParser(reader, CSVFormat.DEFAULT)
-    for (csvRecord in csvParser) {
-        if (csvRecord.get(0) == "4400") {
-            context.session["airport"] = csvRecord.get(1)
-            context.session["country"]= csvRecord.get(2)
-            context.session["city"] = csvRecord.get(3)
-        }
-        // Accessing Values by Column Index
-    }
-}
+import io.ktor.http.cio.*
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.reflect.Array.get
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import java.net.http.HttpResponse
+import java.util.stream.DoubleStream.builder
+import okhttp3.Request;
+import okhttp3.Response;
 
 val mainScenario = Scenario {
-    append(CitiesGame)
+//    append(CitiesGame)
 //    append(GameFunctions)
     state("Start") {
         activators {
-            intent("WhatGamesYouHave")
+            intent("StartGame")
         }
+        get123()
         action {
-            reactions.run {
-                say("Есть {города}{город+а}. Играем?")
-/*                readAll(context)
-                val airport = context.session["airport"]
-                val country = context.session["country"]
-                val city = context.session["city"]
-                say(
-                    "code : AAD\n airport: $airport \n country: $country \n city: $city "
-                )*/
-            }
-        }
-
-        state("Yes") {
-            activators {
-                intent("LetsStart")
-            }
-            action {
-                reactions.go("/CheckWhoStarts")
-            }
-        }
-
-        state("No") {
-            activators {
-                intent("Disagree")
-            }
-            action {
-                reactions.say("Хорошо, сыграем в {города}{город+а} в следующий раз.")
-            }
+//            context.session["gameCities"] = mutableListOf<String>()
+//            context.client["sortedCitiesByLetter"] = {}
+//            reactions.go("/CheckWhoStarts")
         }
     }
+}
 
-    state("CatchAll") {
-        activators {
-            catchAll()
-        }
-        action {
-            reactions.say("Не удалось распознать ваш запрос.")
-            reactions.go("/Start")
-        }
-    }
+
+fun get123() {
+    val client = OkHttpClient()
+    val url = URL("https://app.jaicp.com/cailapub/api/caila/p/88124bdb-64ed-4af3-ac39-ffc6a362765d/entities/68044/records")
+
+    val request = Request.Builder()
+        .url(url)
+        .get()
+        .build()
+
+    val response = client.newCall(request).execute()
+
+    val responseBody = response.body!!.string()
+
+    //Response
+    println("Response Body: " + responseBody)
+
+    //we could use jackson if we got a JSON
+//    val mapperAll = ObjectMapper()
+//    val objData = mapperAll.readTree(responseBody)
+//
+//    objData.get("data").forEachIndexed { index, jsonNode ->
+//        println("$index $jsonNode")
+//    }
 }

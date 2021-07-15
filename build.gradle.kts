@@ -31,7 +31,8 @@ dependencies {
     implementation("com.justai.jaicf:jaicp:$jaicf")
     implementation("com.justai.jaicf:caila:$jaicf")
     implementation("com.justai.jaicf:google-actions:$jaicf")
-    implementation ("org.apache.commons:commons-csv:1.8")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
 }
 
 tasks {
