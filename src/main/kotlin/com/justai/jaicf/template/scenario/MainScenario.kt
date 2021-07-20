@@ -26,7 +26,7 @@ import kotlin.random.Random
 
 import javax.xml.crypto.Data
 import kotlinx.serialization.*
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.*
 
 val mainScenario = Scenario {
 //    append(CitiesGame)
@@ -35,7 +35,7 @@ val mainScenario = Scenario {
         activators {
             intent("StartGame")
         }
-        get123()
+        getCitiesEntity()
         action {
 //            context.session["gameCities"] = mutableListOf<String>()
 //            context.client["sortedCitiesByLetter"] = {}
@@ -45,7 +45,7 @@ val mainScenario = Scenario {
 }
 
 
-fun get123() {
+fun getCitiesEntity() {
     val client = OkHttpClient()
     val url = URL("https://app.jaicp.com/cailapub/api/caila/p/88124bdb-64ed-4af3-ac39-ffc6a362765d/entities-by-name/Cities")
 
@@ -57,41 +57,23 @@ fun get123() {
     val response = client.newCall(request).execute()
 
     val responseBody = response.body!!.string()
-//    val result = responseBody.let { Json.parseToJsonElement(it) }
-    //Response
-//    println("Response Body: $responseBody["records"]")
 
-    //we could use jackson if we got a JSON
     val mapperAll = ObjectMapper()
     val objData = mapperAll.readTree(responseBody)
     val res = objData.get("records")
     val resValue = res[Random.nextInt(0, res.size() -1)]["value"].toString()
-    var city =  resValue.let { Json.parseToJsonElement(it) }
-
-
-//    println(city.jsonObject)
-//        .forEachIndexed { index, jsonNode ->
-//        println("$index $jsonNode")
-//    }
+    val city =  resValue.let { Json.parseToJsonElement(it) }
+    val hell = Json.parseToJsonElement(responseBody)
+    val hellValue = hell.jsonObject["records"]
+    val hellIndex = hellValue?.jsonArray?.get(Random.nextInt(0, res.size() -1))
+    val value = hellIndex?.jsonObject?.get("value")
+        .toString()
+        .replace("\\","")
+        .replace("\"{", "{")
+        .replace("}\"", "}")
+    val name = mapperAll.readTree(value)["name"]
+    println(name)
 }
 
 
 
-@Serializable
-data class Parent(
-    @SerialName("Parent")
-    val parent: SomeClass
-)
-
-@Serializable
-data class SomeClass(
-    @SerialName("SpaceShip")
-    val ship:String,
-    @SerialName("Mark")
-    val mark:Int
-)
-
-fun main() {
-    val parent = Json.parse(Parent.serializer(), "{\"Parent\":{\"SpaceShip\":\"Tardis\",\"Mark\":40}}")
-    println(parent)
-}

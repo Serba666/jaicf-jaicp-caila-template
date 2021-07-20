@@ -67,6 +67,7 @@ val CitiesGame = Scenario {
     state("BotStarts") {
         action {
             context.temp["nextCity"] = getCity(context)
+            var gameCities = mutableListOf<String>()
             context.session["gameCities"] = (context.temp["nextCity"] as String)
             reactions.say("В игре \"города\" нужно называть город на ту букву, на которую закончился предыдущий. Если последняя буква Ъ, Ь, Ы, то называем город на предпоследнюю букву.")
             reactions.say("Если захотите завершить игру, скажите мне об этом.")
